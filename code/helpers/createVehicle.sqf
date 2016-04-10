@@ -1,0 +1,1 @@
+ createVehicle ["Exile_Chopper_Hellcat_Green",position player,[],0,"NONE"]
