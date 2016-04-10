@@ -1,0 +1,1 @@
+player addAction["Ahction",[_actionModel]  execVM format ["interactions/%1.sqf", _actiontype]] };

@@ -1,0 +1,1 @@
+_markerpoint = [player,25,getdir player]call BIS_fnc_relPos; createVehicle ["Exile_Chopper_Hellcat_Green",_markerpoint,[],0,"NONE"]
