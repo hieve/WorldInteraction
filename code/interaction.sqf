@@ -1,7 +1,12 @@
 _debug = true;
-_detect = false;  
-if(isNull cursorObject)then{}else{  																
-	_actionModel = (getModelinfo cursorObject select 0); 									
+_detect = false; 
+_draw = 0;
+_action = 0;
+if(isNull cursorObject)then{
+		if(_action == 0)then{}else{player removeAction _action };}
+else{  																
+	_actionModel = (getModelinfo cursorObject select 0);
+systemchat format ["cursorObject:%1",(str _actionModel)];	
 	_array = [
 "WoodPile_F.p3d",
 "Timbers_F.p3d",
@@ -274,28 +279,43 @@ if(isNull cursorObject)then{}else{
 "Wreck_Van_F.p3d",
 "Scrap_MRAP_01_F.p3d",
 "ScrapHeap_1_F.p3d",
-"ScrapHeap_2_F.p3d"];  
+"ScrapHeap_2_F.p3d",
+"cages_f.p3d"];  
 
 	_arraylength = (count _array-1); 
-	_distObj = (getpos player distance getpos cursorObject);
 	
-	if(_debug)then{systemchat str [_arraylength,_distObj]; };												
+	
+	if(_debug)then{systemchat format ["Checking Objects:%1",_arraylength]; };												
 														
 
 	for "_i" from 0 to _arraylength do  					
 	{   
-		if(_actionModel == _array select _i)then{ _detect = true;}
+		if(_actionModel == _array select _i)then
+		{ 
+			
+			_detect = true;
+			systemchat str"detected";
+			
+			
+		};
 									
 	};  
+	systemchat format ["detected:%1",_detect];
 	if(_detect)then{
+	_distObj = getpos player distance getpos cursorObject;
+	_posObj = getPos cursorObject;
+	
+	systemchat format ["distance:%1",_distObj];
 		if(_distObj <= 50)then{
-		addMissionEventHandler ["Draw3D", {																	
-            drawLine3D [
-                eyepos player,
-                getpos cursorObject,
-                [0,0,1,1]
-            ];
-		}];
-		};
-	player addAction["Ahction",execVM "interactions/ahction.sqf"] };	
-}
+		systemchat format ["Found Object in Range:%1",(str _actionModel)];
+		systemchat format ["Position Object in Range:%1",(str _posObj)];
+		_draw = addMissionEventHandler ["Draw3D", {
+				drawIcon3D ["", [1,0,0,1], position cursorObject, 0, 0, 0, "Use", 1, 0.05, "PuristaMedium"];
+			}];
+		_action = player addAction["Look",[_action] execVM "interactions/look.sqf"] };
+		}
+		else{systemchat format ["detected:%1",_detect];
+			if(_draw == 0)then{}else{removeMissionEventHandler ["Draw3D",_draw];}};	
+			
+};
+uisleep 3;
