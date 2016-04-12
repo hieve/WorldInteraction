@@ -77,7 +77,7 @@ _N2XYPZ = [(_objectx+_objectboxNX),(_objecty+_objectboxPY),_objectboxPZ];
 systemchat str ["position,height>object,player",_object,_objectheight,_player,_playerz];
 
 	
-_isInsideArea = [_object, [(_bbx/2),(_bby/2)], _player ] call BIS_fnc_isInsideArea;
+_isInsideArea = [_object, [(_bbx),(_bby)], _player ] call BIS_fnc_isInsideArea;
 
 systemchat str [_playerX,_playerY,_objectboxNX,_objectboxPX,_objectboxNY,_objectboxPY];
 
@@ -86,6 +86,9 @@ systemchat str [_playerX,_playerY,_objectboxNX,_objectboxPX,_objectboxNY,_object
 _xspread = _objectboxPX-_objectboxNX;
 _yspread = _objectboxPY-_objectboxNY;
 _size = [_xspread,_yspread];
+
+
+
 	
 hint str [_object,_player,_bbx,_bby,_xspread,_yspread,_P1XYPZ,_P2XYPZ,_N1XYPZ,_N2XYPZ ];
 
